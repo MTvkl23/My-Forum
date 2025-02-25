@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { createContext, useState } from "react";
+import Forum from "./Pages/Forum/Forum";
+import Login from "./Pages/Login/Login";
+
+export const AppContext = createContext(null);
 
 function App() {
+  const [replyKeeper, setReplyKeeper] = useState("");
+  const [replyIdKeeper, setReplyIdKeeper] = useState(0);
+  const [senderKeeper, setSenderKeeper] = useState("");
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme ? JSON.parse(savedTheme) : true;
+});;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider value={{ replyKeeper, setReplyKeeper, replyIdKeeper, setReplyIdKeeper, senderKeeper, setSenderKeeper, theme, setTheme }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/Forum" element={<Forum />} />
+        </Routes>
+      </BrowserRouter>
+    </AppContext.Provider>
   );
 }
 
