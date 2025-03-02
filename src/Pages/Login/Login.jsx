@@ -15,7 +15,7 @@ function Login() {
     }
 
     const onInputEnter = (event) => {
-        if (event.key === "Enter") {
+        if (event.key === "Enter" && input) {
             event.preventDefault();
             onLoginClick();
         }
